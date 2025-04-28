@@ -5,7 +5,7 @@ void main() {
   group('Cache test suite', () {
     late CacheManager manager;
     setUp(() {
-      CacheManager.init(store: InMemoryCacheStore());
+      CacheManager.init(store: InMemoryCacheStore(), forceInit: true);
       manager = CacheManager.instance;
     });
 
@@ -22,8 +22,7 @@ void main() {
       expect(cachedItem?.data, {'name': 'John Doe'});
     });
 
-    test('persistent cache items last as long as their specified duration',
-        () async {
+    test('persistent cache items last as long as their specified duration', () async {
       final item = CacheItem.persistent(
         key: 'test-key-2',
         data: {'message': 'Hello world'},

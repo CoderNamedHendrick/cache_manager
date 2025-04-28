@@ -1,3 +1,6 @@
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
 include: package:lints/recommended.yaml
+
+formatter:
+  page-width: 100
