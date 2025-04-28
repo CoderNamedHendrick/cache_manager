@@ -9,6 +9,19 @@ void main() {
       manager = CacheManager.instance;
     });
 
+    test('re-initialisation without forcing throw error', () async {
+      expect(
+        CacheManager.init(store: InMemoryCacheStore()),
+        throwsA(
+          isStateError.having(
+            (p0) => p0.message,
+            'state error message',
+            'Cache manager has already been initialised, force initialisation instead?',
+          ),
+        ),
+      );
+    });
+
     test('ephemeral cache items expire immediately', () async {
       final item = CacheItem.ephemeral(
         key: 'test-key-1',

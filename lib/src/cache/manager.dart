@@ -49,8 +49,12 @@ final class CacheManager {
     if (forceInit) {
       _instance = CacheManager._();
     } else {
+      if (_instance != null) {
+        throw StateError('Cache manager has already been initialised, force initialisation instead?');
+      }
       _instance ??= CacheManager._();
     }
+
     _instance!._stores = {
       if (store != null) store.runtimeType.toString(): store,
       for (final store in stores) store.runtimeType.toString(): store,
