@@ -4,8 +4,6 @@ import 'dart:developer';
 import 'cache_item.dart';
 import 'cache_store.dart';
 
-typedef CacheStoreType = CacheStore;
-
 /// [CacheManager] for orchestrating access to [CacheStore]/(s),
 /// call [init] to initialise the manager with one or multiple [CacheStore]
 final class CacheManager {
