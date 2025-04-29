@@ -17,8 +17,8 @@ A Dart package for managing cache with support for multiple storage backends. Th
 API for caching data, with features like ephemeral and persistent caching, cache invalidation, and support for custom
 storage implementations.
 
-[![codecov](https://codecov.io/gh/CoderNamedHendrick/cache_manager/branch/master/graph/badge.svg)](https://codecov.io/gh/CoderNamedHendrick/cache_manager)
-[![Test](https://github.com/CoderNamedHendrick/cache_manager/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/CoderNamedHendrick/cache_manager/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/CoderNamedHendrick/cache_manager/graph/badge.svg?token=FWovoPM26n)](https://codecov.io/gh/CoderNamedHendrick/cache_manager)
+[![Test](https://github.com/CoderNamedHendrick/cache_manager/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/CoderNamedHendrick/cache_manager/actions/workflows/ci.yaml)
 [![pub package](https://img.shields.io/pub/v/cache_manager_plus.svg?label=Version&style=flat)][pub]
 [![Stars](https://img.shields.io/github/stars/codernamedhendrick/cache_manager?label=Stars&style=flat)][repo]
 [![Watchers](https://img.shields.io/github/watchers/codernamedhendrick/cache_manager?label=Watchers&style=flat)][repo]
