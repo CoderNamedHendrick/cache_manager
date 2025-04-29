@@ -20,8 +20,9 @@ jobs:
         with:
           brew: lcov
 
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v1
+      - name: Fetch and cache flutter sdk
+        id: cache-flutter-sdk
+        uses: actions/cache@v3
         with:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}
