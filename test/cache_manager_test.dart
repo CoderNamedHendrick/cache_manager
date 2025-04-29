@@ -35,7 +35,8 @@ void main() {
       expect(cachedItem?.data, {'name': 'John Doe'});
     });
 
-    test('persistent cache items last as long as their specified duration', () async {
+    test('persistent cache items last as long as their specified duration',
+        () async {
       final item = CacheItem.persistent(
         key: 'test-key-2',
         data: {'message': 'Hello world'},

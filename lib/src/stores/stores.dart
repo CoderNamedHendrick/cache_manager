@@ -1,2 +1,2 @@
-//GENERATED BARREL FILE 
-export 'in_memory_store.dart'; 
+//GENERATED BARREL FILE
+export 'in_memory_store.dart';

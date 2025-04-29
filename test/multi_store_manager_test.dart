@@ -21,9 +21,11 @@ void main() {
 
       await manager.set<InMemoryCacheStore>(item);
 
-      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isExpired, true);
+      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isExpired,
+          true);
 
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1')) == null, true);
+      expect((await manager.get<TestInMemoryCacheStore>('test-key-1')) == null,
+          true);
     });
 
     test('verify ephemeral cache item is saved to a single store', () async {
@@ -34,9 +36,12 @@ void main() {
 
       await manager.set<TestInMemoryCacheStore>(item);
 
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isExpired, true);
+      expect(
+          (await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isExpired,
+          true);
 
-      expect((await manager.get<InMemoryCacheStore>('test-key-1')) == null, true);
+      expect(
+          (await manager.get<InMemoryCacheStore>('test-key-1')) == null, true);
     });
 
     test('verify set all updates all cache stores', () async {
@@ -47,8 +52,10 @@ void main() {
 
       await manager.set(item, all: true);
 
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1')) != null, true);
-      expect((await manager.get<InMemoryCacheStore>('test-key-1')) != null, true);
+      expect((await manager.get<TestInMemoryCacheStore>('test-key-1')) != null,
+          true);
+      expect(
+          (await manager.get<InMemoryCacheStore>('test-key-1')) != null, true);
     });
 
     test('verify contains method works correctly across stores', () async {
@@ -122,13 +129,17 @@ void main() {
 
       expect(manager.allContains('test-key-1')?.length, 2);
 
-      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid, true);
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid, true);
+      expect(
+          (await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid, true);
+      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid,
+          true);
 
       await manager.invalidateCacheItem<InMemoryCacheStore>('test-key-1');
 
-      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid, false);
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid, true);
+      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid,
+          false);
+      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid,
+          true);
     });
 
     // verify invalidate cache item works correctly for all stores
@@ -143,13 +154,17 @@ void main() {
 
       expect(manager.allContains('test-key-1')?.length, 2);
 
-      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid, true);
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid, true);
+      expect(
+          (await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid, true);
+      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid,
+          true);
 
       await manager.invalidateCacheItem('test-key-1', all: true);
 
-      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid, false);
-      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid, false);
+      expect((await manager.get<InMemoryCacheStore>('test-key-1'))?.isValid,
+          false);
+      expect((await manager.get<TestInMemoryCacheStore>('test-key-1'))?.isValid,
+          false);
     });
 
     // verify cache item expired works for single store
@@ -162,13 +177,23 @@ void main() {
 
       await manager.set(item, all: true);
 
-      expect((await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1')), false);
-      expect((await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1')), false);
+      expect(
+          (await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1')),
+          false);
+      expect(
+          (await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1')),
+          false);
 
       await manager.invalidateCacheItem<InMemoryCacheStore>('test-key-1');
 
-      expect((await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1')), true);
-      expect((await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1')), false);
+      expect(
+          (await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1')),
+          true);
+      expect(
+          (await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1')),
+          false);
     });
 
     // verify any cache item expired method
@@ -181,12 +206,18 @@ void main() {
 
       await manager.set(item, all: true);
 
-      expect((await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1')), false);
-      expect((await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1')), false);
+      expect(
+          (await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1')),
+          false);
+      expect(
+          (await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1')),
+          false);
 
       await manager.invalidateCacheItem<InMemoryCacheStore>('test-key-1');
 
-      expect((await manager.anyCacheItemExpired('test-key-1')), isA<InMemoryCacheStore>());
+      expect((await manager.anyCacheItemExpired('test-key-1')),
+          isA<InMemoryCacheStore>());
     });
 
     // verify invalidate cache method works correctly for single store
@@ -218,23 +249,53 @@ void main() {
 
       await storeActions.wait;
 
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'), false);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'), false);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'), false);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'),
+          false);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'),
+          false);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'),
+          false);
 
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'), false);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'), false);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'), false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'),
+          false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'),
+          false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'),
+          false);
 
       await manager.invalidateCache<InMemoryCacheStore>();
 
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'), null);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'), null);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'), null);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'),
+          null);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'),
+          null);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'),
+          null);
 
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'), false);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'), false);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'), false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'),
+          false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'),
+          false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'),
+          false);
     });
 
     // verify invalidate cache method works correctly for all stores
@@ -266,23 +327,53 @@ void main() {
 
       await storeActions.wait;
 
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'), false);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'), false);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'), false);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'),
+          false);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'),
+          false);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'),
+          false);
 
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'), false);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'), false);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'), false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'),
+          false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'),
+          false);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'),
+          false);
 
       await manager.invalidateCache(all: true);
 
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'), null);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'), null);
-      expect(await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'), null);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-1'),
+          null);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-2'),
+          null);
+      expect(
+          await manager.hasCacheItemExpired<InMemoryCacheStore>('test-key-3'),
+          null);
 
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'), null);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'), null);
-      expect(await manager.hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'), null);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-1'),
+          null);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-2'),
+          null);
+      expect(
+          await manager
+              .hasCacheItemExpired<TestInMemoryCacheStore>('test-key-3'),
+          null);
     });
   });
 }
@@ -330,7 +421,8 @@ final class TestInMemoryCacheStore implements CacheStore {
     final item = await getCacheItem(key);
     if (item == null) return;
 
-    return await saveCacheItem(item.copyWith(persistenceDuration: const Duration(minutes: -5)));
+    return await saveCacheItem(
+        item.copyWith(persistenceDuration: const Duration(minutes: -5)));
   }
 
   @override

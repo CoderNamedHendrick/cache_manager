@@ -124,7 +124,9 @@ This project is licensed under the MIT License—see the [LICENSE](LICENSE) file
 
 ## Additional information
 
-For more details, visit the [repository](https://github.com/CoderNamedHendrick/cache_manager). Contributions, issues,
+For more details, visit the [repository](https://github.com/CoderNamedHendrick/cache_manager)
+and [example tests](https://github.com/CoderNamedHendrick/cache_manager/blob/main/test/cache_manager_test.dart).
+Contributions, issues,
 and feature requests are welcome. See the [issue tracker](https://github.com/CoderNamedHendrick/cache_manager/issues)
 for more information.
 
