@@ -1,4 +1,4 @@
-import 'package:cache_manager/cache_manager.dart';
+import 'package:cache_manager_plus/cache_manager_plus.dart';
 import 'package:test/test.dart';
 
 void main() {

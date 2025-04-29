@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/to/develop-packages).
 -->
 
-# Cache Manager 📚
+# Cache Manager Plus 📚
 
 A Dart package for managing cache with support for multiple storage backends. The `CacheManager` provides an easy-to-use
 API for caching data, with features like ephemeral and persistent caching, cache invalidation, and support for custom
@@ -19,7 +19,7 @@ storage implementations.
 
 [![codecov](https://codecov.io/gh/CoderNamedHendrick/cache_manager/branch/master/graph/badge.svg)](https://codecov.io/gh/CoderNamedHendrick/cache_manager)
 [![Test](https://github.com/CoderNamedHendrick/cache_manager/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/CoderNamedHendrick/cache_manager/actions/workflows/ci.yaml)
-[![pub package](https://img.shields.io/pub/v/cache_manager.svg?label=Version&style=flat)][pub]
+[![pub package](https://img.shields.io/pub/v/cache_manager_plus.svg?label=Version&style=flat)][pub]
 [![Stars](https://img.shields.io/github/stars/codernamedhendrick/cache_manager?label=Stars&style=flat)][repo]
 [![Watchers](https://img.shields.io/github/watchers/codernamedhendrick/cache_manager?label=Watchers&style=flat)][repo]
 
@@ -48,13 +48,13 @@ To use this package, add it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  cache_manager: ^1.0.0
+  cache_manager_plus: ^1.0.0
  ```
 
 Install by running:
 
 ```console
-dart pub add cache_manager
+dart pub add cache_manager_plus
 ```
 
 ## Usage 🔧
@@ -64,7 +64,7 @@ Initializing the CacheManager
 You can initialize the CacheManager with a single store or multiple stores:
 
 ```dart
-import 'package:cache_manager/cache_manager.dart';
+import 'package:cache_manager_plus/cache_manager_plus.dart';
 
 void main() async {
   // Single store mode

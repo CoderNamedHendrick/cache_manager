@@ -1,0 +1,17 @@
+name: example
+description: A simple command-line application.
+version: 1.0.0
+publish_to: none
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.7.2
+
+# Add regular dependencies here.
+dependencies:
+
+  cache_manager_plus:
+    path: ../
+
+dev_dependencies:
+  lints: ^5.1.1

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:cache_manager/cache_manager.dart';
-import 'package:cache_manager/src/stores/hive_store.dart';
+
+import '../../cache_manager_plus.dart';
 
 /// contract defining the shape of a [CacheStore] used to create
 /// custom stores that are passed to the [CacheManager] to orchestrate

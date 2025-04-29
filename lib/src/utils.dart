@@ -1,5 +1,3 @@
-import 'package:cache_manager/cache_manager.dart';
-
 /// provides [CacheManager] utility methods to help with orchestrating
 /// the manager in different contexts, for example
 /// [composeKeyFromUrl] being used to compose a [CacheItem] key from a
