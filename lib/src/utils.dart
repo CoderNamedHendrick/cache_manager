@@ -1,4 +1,14 @@
+import 'package:cache_manager/cache_manager.dart';
+
+/// provides [CacheManager] utility methods to help with orchestrating
+/// the manager in different contexts, for example
+/// [composeKeyFromUrl] being used to compose a [CacheItem] key from a
+/// given url
 final class CacheManagerUtils {
+  const CacheManagerUtils._();
+
+  /// returns key intended to be used as a [CacheItem] key from a http url,
+  /// it takes the url [path], a [requestMethod] and an optional [queryParams]
   static String composeKeyFromUrl(
     String path, {
     required String requestMethod,

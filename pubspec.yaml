@@ -1,7 +1,9 @@
 name: cache_manager
 description: "A new Flutter project."
-version: 0.0.1
-homepage:
+version: 1.0.0
+homepage: https://github.com/CoderNamedHendrick/cache_manager
+repository: https://github.com/CoderNamedHendrick/cache_manager
+issue_tracker: https://github.com/CoderNamedHendrick/cache_manager/issues
 
 environment:
   sdk: ^3.0.0
@@ -12,6 +14,3 @@ dependencies:
 dev_dependencies:
   lints: any
   test: ^1.25.15
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec

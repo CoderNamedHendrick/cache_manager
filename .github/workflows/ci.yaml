@@ -1,0 +1,49 @@
+name: CI pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests-and-upload-coverage-report:
+    name: Test package
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ConorMacBride/install-package@v1
+        with:
+          brew: lcov
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v1
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Format code
+        run: dart format . --set-exit-if-changed
+
+      - name: Lint analysis
+        run: dart analyze --no-pub
+
+      - name: Run tests
+        run: dart test --coverage coverage/lcov.info
+
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
