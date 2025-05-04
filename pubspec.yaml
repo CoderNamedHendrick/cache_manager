@@ -1,6 +1,6 @@
 name: cache_manager_plus
 description: "A Dart package for managing cache with support for multiple storage backends."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/CoderNamedHendrick/cache_manager
 repository: https://github.com/CoderNamedHendrick/cache_manager
 issue_tracker: https://github.com/CoderNamedHendrick/cache_manager/issues
@@ -16,7 +16,6 @@ environment:
   sdk: ^3.0.0
 
 dependencies:
-  hive: ^2.2.3
 
 dev_dependencies:
   lints: any
