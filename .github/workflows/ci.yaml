@@ -47,6 +47,7 @@ jobs:
           dart test --coverage coverage/lcov.info
           ls 
           ls ./coverage
+          pwd
 
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v5
