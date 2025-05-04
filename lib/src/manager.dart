@@ -40,14 +40,12 @@ final class CacheManager {
     List<CacheStore> stores = const [],
     bool forceInit = false,
   }) async {
-    assert(store != null || stores.isNotEmpty,
-        'At least one store must be provided');
-
     if (store == null && stores.isEmpty) {
       throw ArgumentError('At least one store must be provided');
     }
 
     if (forceInit) {
+      await close(); // safe closes all stores
       _instance = CacheManager._();
     } else {
       if (_instance != null) {
@@ -57,18 +55,40 @@ final class CacheManager {
       _instance ??= CacheManager._();
     }
 
-    _instance!._stores = {
-      if (store != null) store.runtimeType.toString(): store,
-      for (final store in stores) store.runtimeType.toString(): store,
-    };
+    _instance!._stores = {};
+    if (store case final CacheStore s) {
+      _instance!._stores.putIfAbsent(s.runtimeType.toString(), () => s);
+    }
+    for (final store in stores) {
+      _instance!._stores.putIfAbsent(store.runtimeType.toString(), () => store);
+    }
 
     await Future.wait(
       instance._stores.values.map((store) => store.initialiseStore()),
     );
   }
 
-  static void close() {
-    _instance = null;
+  /// closes all stores
+  static Future<void> close() async {
+    if (_instance != null) {
+      await _instance!._stores.values
+          .map((store) async => await store.close())
+          .wait;
+      _instance = null;
+    }
+  }
+
+  /// retrieves all [CacheStore] that matches the [predicate]
+  Future<Iterable<CacheStore>> where(
+      String key, bool Function(CacheItem i) predicate) async {
+    List<CacheStore> s = [];
+    for (final store in _stores.values) {
+      if (await store.getCacheItem(key) case final CacheItem it) {
+        if (predicate(it)) s.add(store);
+      }
+    }
+
+    return s;
   }
 
   /// retrieves the [CacheStore] version for the [CacheStore] specified by
@@ -163,11 +183,11 @@ final class CacheManager {
     return await invalidateItemInCache(_effectiveStore(S.toString()));
   }
 
-  /// helper method to check if a [CacheItem] has expired/valid. It returns a
+  /// helper method to check if a [CacheItem] is expired/valid. It returns a
   /// nullable boolean with null being returned when the item doesn't exist
   /// in the [CacheStore] specified by the method's generic type [S]
   /// or the first [CacheStore] in the manager
-  FutureOr<bool?> hasCacheItemExpired<S extends CacheStore>(String key) async {
+  FutureOr<bool?> isCacheItemExpired<S extends CacheStore>(String key) async {
     final item = await _effectiveStore(S.toString()).getCacheItem(key);
     return item?.isExpired;
   }

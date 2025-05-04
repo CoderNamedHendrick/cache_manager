@@ -31,8 +31,6 @@ final class CacheItem {
 
   bool get isValid => !isExpired;
 
-  bool get isInvalid => !isValid;
-
   String toCacheEntryString() {
     return jsonEncode({
       'expiry': expiry.toIso8601String(),
@@ -79,6 +77,8 @@ final class CacheItem {
         other.expiry == expiry;
   }
 
+  //coverage:ignore-start
   @override
   int get hashCode => key.hashCode ^ data.hashCode ^ expiry.hashCode;
+  //coverage:ignore-end
 }
