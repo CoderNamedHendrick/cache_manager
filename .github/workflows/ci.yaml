@@ -16,21 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ConorMacBride/install-package@v1
-        with:
-          brew: lcov
-
-      - name: Fetch and cache flutter sdk
-        id: cache-flutter-sdk
-        uses: actions/cache@v3
-        with:
-          path: /opt/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           cache: true
+          flutter-version: 3.29.3
           channel: 'stable'
 
       - name: Install dependencies
@@ -46,8 +36,7 @@ jobs:
         run: dart analyze
 
       - name: Run tests
-        run: |
-          dart pub global run coverage:test_with_coverage
+        run: dart pub global run coverage:test_with_coverage
 
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v5
