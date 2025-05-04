@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
+      - run: dart pub global activate coverage
+        name: Activate dart coverage
+
       - name: Format code
         run: dart format . --set-exit-if-changed
 
