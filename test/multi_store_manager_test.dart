@@ -402,36 +402,40 @@ final class TestInMemoryCacheStore implements CacheStore {
 
   @override
   Future<int> get cacheVersion async {
-    if (_store == null)
+    if (_store == null) {
       throw StateError(
           'Store not initialised, did you fail to initialise the store?');
+    }
 
     return int.parse(_store!['version'] ?? '-1');
   }
 
   @override
   Future<void> updateCacheVersion(int version) async {
-    if (_store == null)
+    if (_store == null) {
       throw StateError(
           'Store not initialised, did you fail to initialise the store?');
+    }
 
     _store!['version'] = version.toString();
   }
 
   @override
   bool containsKey(String key) {
-    if (_store == null)
+    if (_store == null) {
       throw StateError(
           'Store not initialised, did you fail to initialise the store?');
+    }
 
     return _store!.containsKey(key);
   }
 
   @override
   Future<CacheItem?> getCacheItem(String key) async {
-    if (_store == null)
+    if (_store == null) {
       throw StateError(
           'Store not initialised, did you fail to initialise the store?');
+    }
 
     final item = _store![key];
     if (item == null) return null;
@@ -446,9 +450,10 @@ final class TestInMemoryCacheStore implements CacheStore {
 
   @override
   Future<void> invalidateCache() async {
-    if (_store == null)
+    if (_store == null) {
       throw StateError(
           'Store not initialised, did you fail to initialise the store?');
+    }
 
     return _store!.clear();
   }

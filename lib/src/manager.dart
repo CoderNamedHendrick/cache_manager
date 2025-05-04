@@ -40,23 +40,24 @@ final class CacheManager {
     List<CacheStore> stores = const [],
     bool forceInit = false,
   }) async {
-    if (store == null && stores.isEmpty)
+    if (store == null && stores.isEmpty) {
       throw ArgumentError('At least one store must be provided');
+    }
 
     if (forceInit) {
       await close(); // safe closes all stores
       _instance = CacheManager._();
     } else {
       if (_instance != null) {
-        throw StateError(
-            'Cache manager has already been initialised, force initialisation instead?');
+        throw StateError('Cache manager has already been initialised, force initialisation instead?');
       }
       _instance ??= CacheManager._();
     }
 
     _instance!._stores = {};
-    if (store case final CacheStore s)
+    if (store case final CacheStore s) {
       _instance!._stores.putIfAbsent(s.runtimeType.toString(), () => s);
+    }
     for (final store in stores) {
       _instance!._stores.putIfAbsent(store.runtimeType.toString(), () => store);
     }
@@ -69,16 +70,13 @@ final class CacheManager {
   /// closes all stores
   static Future<void> close() async {
     if (_instance != null) {
-      await _instance!._stores.values
-          .map((store) async => await store.close())
-          .wait;
+      await _instance!._stores.values.map((store) async => await store.close()).wait;
       _instance = null;
     }
   }
 
   /// retrieves all [CacheStore] that matches the [predicate]
-  Future<Iterable<CacheStore>> where(
-      String key, bool Function(CacheItem i) predicate) async {
+  Future<Iterable<CacheStore>> where(String key, bool Function(CacheItem i) predicate) async {
     List<CacheStore> s = [];
     for (final store in _stores.values) {
       if (await store.getCacheItem(key) case final CacheItem it) {
@@ -98,8 +96,7 @@ final class CacheManager {
   /// updates the [CacheStore] version for the [CacheStore] specified by
   /// the method's generic type [S] or the first [CacheStore] in the manager.
   /// All [CacheStore] in the manager can be updated by setting [all] to true
-  Future<void> updateCacheVersion<S extends CacheStore>(int version,
-      {bool all = false}) async {
+  Future<void> updateCacheVersion<S extends CacheStore>(int version, {bool all = false}) async {
     return await _effectiveStore(S.toString()).updateCacheVersion(version);
   }
 
@@ -107,8 +104,7 @@ final class CacheManager {
   /// generic type [S] or the first [CacheStore] in the manager.
   /// The [CacheItem] can be set in all [CacheStore] in the manager by setting
   /// [all] to true
-  Future<void> set<S extends CacheStore>(CacheItem item,
-      {bool all = false}) async {
+  Future<void> set<S extends CacheStore>(CacheItem item, {bool all = false}) async {
     if (all) {
       log('setting cache data for ${item.key} in all stores');
       await _stores.values.map((store) => store.saveCacheItem(item)).wait;
@@ -163,8 +159,7 @@ final class CacheManager {
   /// invalidates [CacheItem] with the [key] in the [CacheStore] specified
   /// by the method's generic type [S] or the first [CacheStore] in the manager.
   /// Invalidate [CacheItem] in all [CacheStore] by setting [all] to true
-  Future<void> invalidateCacheItem<S extends CacheStore>(String key,
-      {bool all = false}) async {
+  Future<void> invalidateCacheItem<S extends CacheStore>(String key, {bool all = false}) async {
     Future<void> invalidateItemInCache(CacheStore store) async {
       if (!store.containsKey(key)) {
         return;
@@ -194,8 +189,8 @@ final class CacheManager {
   /// in the [CacheManager]
   Future<CacheStore?> anyCacheItemExpired(String key) async {
     for (final store in _stores.values) {
-      if (await _effectiveStore(store.runtimeType.toString()).getCacheItem(key)
-          case final CacheItem item when item.isExpired) {
+      if (await _effectiveStore(store.runtimeType.toString()).getCacheItem(key) case final CacheItem item
+          when item.isExpired) {
         return store;
       }
     }
