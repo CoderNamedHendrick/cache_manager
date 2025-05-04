@@ -27,12 +27,17 @@ jobs:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}
 
-      - uses: subosito/flutter-action@v2
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
+          cache: true
           channel: 'stable'
 
       - name: Install dependencies
         run: dart pub get
+
+      - run: dart pub global activate coverage
+        name: Activate dart coverage
 
       - name: Format code
         run: dart format . --set-exit-if-changed
@@ -41,10 +46,11 @@ jobs:
         run: dart analyze
 
       - name: Run tests
-        run: dart test --coverage coverage/lcov.info
+        run: |
+          dart pub global run coverage:test_with_coverage
 
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v5
         with:
-          files: ./coverage/lcov.info
+          fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
