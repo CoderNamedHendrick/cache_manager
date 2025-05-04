@@ -40,7 +40,8 @@ storage implementations.
 - **Cache Invalidation**: Invalidate specific cache items or clear the entire cache.
 - **Singleton Access**: Manage cache through a singleton `CacheManager` instance.
 - **Customizable**: Extend the `CacheStore` interface to create your own storage backends.
-- **Utils**: Provides several utility methods to help communicate with the manager effectively in different contexts.
+- **Utils**: Find CacheManagerPlus utilities as a pub package [here](https://pub.dev/packages/cache_manager_plus_utils).
+  Includes different CacheStore implementations and other utility functions
 
 ## Installation 🏗️
 

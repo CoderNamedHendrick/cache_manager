@@ -1,5 +1,4 @@
 library;
 
 export 'src/cache/cache.dart';
-export 'src/stores/stores.dart';
-export 'src/utils.dart';
+export 'src/in_memory_store.dart';

@@ -1,4 +1,4 @@
-import '../cache/cache.dart';
+import 'cache/cache.dart';
 
 final class InMemoryCacheStore implements CacheStore {
   InMemoryCacheStore();
