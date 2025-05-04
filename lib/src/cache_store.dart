@@ -1,3 +1,5 @@
+//coverage:ignore-file
+
 import 'dart:async';
 
 import '../../cache_manager_plus.dart';
@@ -79,4 +81,10 @@ abstract interface class CacheStore {
   ///
   /// ```
   bool containsKey(String key);
+
+  /// contract requirement for closing the cache store
+  /// helpful to allow stores be closed safely to prevent memory leaks.
+  /// When implemented, the client should have to reinitialise the store to read
+  /// its content
+  FutureOr<void> close();
 }

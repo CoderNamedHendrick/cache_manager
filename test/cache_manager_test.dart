@@ -4,9 +4,25 @@ import 'package:test/test.dart';
 void main() {
   group('Cache test suite', () {
     late CacheManager manager;
-    setUp(() {
-      CacheManager.init(store: InMemoryCacheStore(), forceInit: true);
+    setUp(() async {
+      await CacheManager.init(store: InMemoryCacheStore(), forceInit: true);
       manager = CacheManager.instance;
+    });
+
+    tearDown(() async {
+      await CacheManager.close();
+    });
+
+    test('not passing any store throws error', () async {
+      await CacheManager.close();
+
+      expect(
+        CacheManager.init(),
+        throwsA(
+          isArgumentError.having((p0) => p0.message, 'invalid arguments error',
+              'At least one store must be provided'),
+        ),
+      );
     });
 
     test('re-initialisation without forcing throw error', () async {
@@ -20,6 +36,14 @@ void main() {
           ),
         ),
       );
+    });
+
+    test('update cache version', () async {
+      expect(await manager.cacheVersion(), -1);
+
+      manager.updateCacheVersion(1);
+
+      expect(await manager.cacheVersion(), 1);
     });
 
     test('ephemeral cache items expire immediately', () async {
@@ -73,6 +97,41 @@ void main() {
       final updatedCachedItem = await manager.get('test-key-3');
       expect(updatedCachedItem?.isExpired, true);
       expect(updatedCachedItem?.data, {'data': 'look at me'});
+    });
+
+    test('close store and reinitialise', () async {
+      final item = CacheItem.persistent(
+        key: 'test-key-3',
+        data: {'data': 'look at me'},
+        duration: Duration(seconds: 40),
+      );
+
+      CacheManager.instance.set(item);
+
+      var cachedItem = await CacheManager.instance.get('test-key-3');
+      expect(cachedItem?.isExpired, false);
+
+      await CacheManager.close();
+
+      expect(
+        () async {
+          await CacheManager.instance.set(item);
+        }(),
+        throwsA(
+          isArgumentError.having(
+            (p0) => p0.message,
+            'state error message',
+            'CacheManager not initialized',
+          ),
+        ),
+      );
+
+      CacheManager.init(store: InMemoryCacheStore());
+
+      CacheManager.instance.set(item);
+
+      cachedItem = await CacheManager.instance.get('test-key-3');
+      expect(cachedItem?.isExpired, false);
     });
   });
 }
